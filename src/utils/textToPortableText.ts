@@ -1,6 +1,6 @@
 import {nanoid} from 'nanoid'
 
-export const textToPortableText = (text: string) => {
+export const textToPortableText = (text: string): {} => {
   return [
     {
       _type: 'block',

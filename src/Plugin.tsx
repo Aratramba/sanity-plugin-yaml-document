@@ -21,7 +21,7 @@ const Plugin = ({
   documentId: string
   document: object
 }) => {
-  function saveDocument(doc: object, cb: (msg: string) => {}, onError: (err: string) => {}) {
+  function saveDocument(doc: object, cb: (msg: string) => void, onError: (err: string) => void) {
     client
       .patch(document?.displayed?._id)
       .set(doc)

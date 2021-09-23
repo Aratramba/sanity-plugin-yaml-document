@@ -6,11 +6,14 @@ import {SchemaType, AnyObject, DefinitionObject} from '../../types'
  * Load a string of YAML and return JSON
  */
 
-export const loadYaml = (value: string, onError: (err: Error) => {}) => {
+export const loadYaml = (
+  value: string,
+  onError: (err: string) => void
+): object | string | number | null | undefined => {
   try {
     return yaml.load(value)
   } catch (err: any) {
-    onError(err)
+    onError(err.message)
     return {}
   }
 }
@@ -19,7 +22,7 @@ export const loadYaml = (value: string, onError: (err: Error) => {}) => {
  * Create new JSON document ready for import into Sanity
  */
 
-export const generateDocument = async (schema: SchemaType[], dataObj: object) => {
+export const generateDocument = async (schema: SchemaType[], dataObj: object): Promise<object> => {
   const definition = getSchemaDefinition(schema, {})
   return parse(definition, dataObj)
 }
@@ -84,7 +87,7 @@ export const parse = async (
   return clearEmpties(newObj)
 }
 
-export const clearEmpties = (obj: any) => {
+export const clearEmpties = (obj: any): object => {
   for (var k in obj) {
     if (!obj[k] || typeof obj[k] !== 'object' || Array.isArray(obj[k])) {
       continue

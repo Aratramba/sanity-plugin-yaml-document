@@ -5,7 +5,7 @@
   "main": "lib/Plugin.js",
   "scripts": {
     "build": "sanipack build",
-    "watch": "sanipack build --watch",
+    "dev": "sanipack build --watch",
     "prepublishOnly": "sanipack build && sanipack verify"
   },
   "repository": {

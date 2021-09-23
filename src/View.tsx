@@ -12,7 +12,7 @@ export const View = ({
 }: {
   documentId: string
   fields: []
-  doImport: (doc: object, cb: () => {}, onError: () => {}) => {}
+  doImport: (doc: object, cb: (msg: string) => void, onError: (err: string) => void) => {}
 }) => {
   const toast = useToast()
   const [value, setValue] = useState<string>('')
@@ -33,10 +33,10 @@ export const View = ({
       setLoading(false)
     }
 
-    const doc = loadYaml(value, (err) => {
+    const doc = loadYaml(value, (err: string) => {
       toast.push({
         status: 'error',
-        title: err.message,
+        title: err,
       })
     })
 

@@ -23,5 +23,9 @@ export interface AnyObject {
 }
 
 export interface DefinitionObject {
-  [key: string]: (value: string) => {} | DefinitionObject | {}
+  [key: string]: (value: string) => DefinitionObject
 }
+
+// const a: DefinitionObject = {
+//   a: (x) => 'string',
+// }

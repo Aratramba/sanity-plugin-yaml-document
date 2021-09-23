@@ -5,32 +5,32 @@ const client = sanityClient.withConfig({apiVersion: '2021-06-10'})
 
 import {slugify} from './slugify'
 
-export const _stringHelper = (value: string) => {
+export const _stringHelper = (value: string): string => {
   if (!value) return ''
   return value
 }
 
-export const _booleanHelper = (value: string) => {
+export const _booleanHelper = (value: boolean): boolean => {
   if (!value) return false
   return Boolean(value)
 }
 
-export const _slugHelper = (value: string) => {
+export const _slugHelper = (value: string): {current: string} => {
   if (!value) return {current: ''}
   return {current: slugify(value)}
 }
 
-export const _textHelper = (value: string) => {
+export const _textHelper = (value: string): string => {
   if (!value.trim().length) return ''
   return value
 }
 
-export const _blockHelper = (value: string) => {
+export const _blockHelper = (value: string): {} => {
   if (!value.trim().length) return textToPortableText('')
   return textToPortableText(value)
 }
 
-export const _arrayHelper = (value: []) => {
+export const _arrayHelper = (value: []): any[] => {
   if (!value?.filter(Boolean).length) return []
 
   return value.map((item: string | object) => {
@@ -52,18 +52,18 @@ export const _arrayHelper = (value: []) => {
   })
 }
 
-type typeWithIdAndTitle = {title: string; _id: string}
+type IdAndTitleObject = {title: string; _id: string}
 
 export const _chooseFromReferenceHelper = async (value: [], _type: string) => {
   if (!value?.filter(Boolean).length) return []
 
-  const all: typeWithIdAndTitle[] = await client.fetch(`*[_type == "${_type}"] { _id, title }`, {})
+  const all: IdAndTitleObject[] = await client.fetch(`*[_type == "${_type}"] { _id, title }`, {})
   return value.filter(Boolean).map((item: string) => {
     return all
-      .filter((refItem: typeWithIdAndTitle) => {
+      .filter((refItem: IdAndTitleObject) => {
         return item.toLowerCase() === refItem.title.toLowerCase()
       })
-      .map((item: typeWithIdAndTitle) => ({
+      .map((item: IdAndTitleObject) => ({
         _key: nanoid(),
         _ref: item._id,
         _type: 'reference',

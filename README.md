@@ -12,7 +12,10 @@ sanity install yaml-document
 
 ## Roadmap
 
-* [ ] add more schema types
+* [ ] add support for simple (single type, non reference) arrays
+* [ ] support schema types
+* [ ] support reference types (?)
 * [ ] add yaml validation
 * [ ] add yaml export
+* [ ] add yaml skeleton export
 * [ ] markdown to portable text?
